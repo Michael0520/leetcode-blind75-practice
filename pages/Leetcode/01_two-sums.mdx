@@ -1,0 +1,82 @@
+## Two Sums：數組中的兩數之和
+
+### 題目描述
+
+"Two Sums" 是一個經典的算法問題，通常用於測試基礎的數組（陣列）操作和哈希表的使用。在這個問題中，你會得到一個整數數組（Array）和一個目標整數。你的任務是找出數組中兩個不同的數，使它們的和等於給定的目標整數。
+
+### 輸入 / 輸出
+
+- 輸入：一個整數數組 nums 和一個整數 target
+- 輸出：兩個數的索引，這兩個數之和為 target
+
+### 範例
+
+```text
+輸入：nums = [2, 7, 11, 15], target = 9
+輸出：[0, 1]
+解釋：nums[0] + nums[1] = 2 + 7 = 9
+```
+
+### 解題思路
+
+- 暴力法（Brute-Force）：遍歷數組中的每一對數，檢查它們的和是否等於 target。
+- 哈希表（Hash Map）：使用哈希表儲存遍歷過的數和其索引，這樣就能在常數時間內查找 target - num 是否存在。
+
+### 複雜度分析
+
+- **暴力法**：時間複雜度 \(O(n^2)\)，空間複雜度 \(O(1)\)
+- **哈希表**：時間複雜度 \(O(n)\)，空間複雜度 \(O(n)\)
+
+以下提供使用 JavaScript 實現的兩種主要解法：暴力法和哈希表。
+
+### 1. 暴力法（Brute-Force）
+
+#### 程式碼（JavaScript）
+
+```javascript
+function twoSumBruteforce(nums, target) {
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] + nums[j] === target) {
+        return [i, j];
+      }
+    }
+  }
+}
+```
+
+#### 解析
+
+這個方法會遍歷數組中的每一對數字，然後檢查它們的和是否等於目標值 \`target\`。
+
+#### 複雜度分析
+
+- **時間複雜度**: \(O(n^2)\)
+- **空間複雜度**: \(O(1)\)
+
+### 2. 哈希表（Hash Map）
+
+#### 程式碼（JavaScript）
+
+```javascript
+function twoSumHashmap(nums, target) {
+  const hashMap = {};
+  for (let i = 0; i < nums.length; i++) {
+    const diff = target - nums[i];
+    if (hashMap.hasOwnProperty(diff)) {
+      return [hashMap[diff], i];
+    }
+    hashMap[nums[i]] = i;
+  }
+}
+```
+
+#### 解析
+
+這個方法使用一個哈希表來存儲遍歷過的數字和它們的索引。
+這樣，我們就可以在 \(O(1)\) 的時間複雜度內查詢 `target - num` 是否存在。
+
+#### 複雜度分析
+
+- **時間複雜度**: \(O(n)\)
+- **空間複雜度**: \(O(n)\)

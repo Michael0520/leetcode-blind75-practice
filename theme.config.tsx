@@ -1,18 +1,18 @@
-import React from 'react'
-import { DocsThemeConfig } from 'nextra-theme-docs'
+import React from "react";
+import { DocsThemeConfig } from "nextra-theme-docs";
 
 const config: DocsThemeConfig = {
-  logo: <span>My Project</span>,
+  logo: <span>LeetCode Practice</span>,
   project: {
-    link: 'https://github.com/shuding/nextra-docs-template',
+    link: "https://github.com/Michael0520/leetcode-list",
   },
-  chat: {
-    link: 'https://discord.com',
-  },
-  docsRepositoryBase: 'https://github.com/shuding/nextra-docs-template',
+  // chat: {
+  //   link: "https://discord.com",
+  // },
+  docsRepositoryBase: "https://github.com/kylemocode/FE-mentor-program-v1",
   footer: {
-    text: 'Nextra Docs Template',
+    text: "LeetCode Practice © 2023",
   },
-}
+};
 
-export default config
+export default config;
