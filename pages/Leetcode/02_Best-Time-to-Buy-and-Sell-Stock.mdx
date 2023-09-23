@@ -1,0 +1,66 @@
+# 121. Best Time to Buy and Sell Stock
+
+## 題目概述
+
+這個問題要求我們找出一個陣列中的最大差值，這個陣列代表了股票在不同天的價格，
+重點是，我們必須先買入股票，然後再賣出，也就是說買入的價格必須在賣出價格之前。
+
+## 解題方法
+
+### 方法一：暴力法（Brute-force）
+
+這種方法是使用兩個巢狀迴圈遍歷所有可能的買入和賣出組合，然後找出最大利潤。
+
+```javascript
+const maxProfitBruteForce = (prices) => {
+  let maxProfit = 0;
+
+  for (let i = 0; i < prices.length; i++) {
+    for (let j = i + 1; j < prices.length; j++) {
+      const profit = prices[j] - prices[i];
+      maxProfit = Math.max(maxProfit, profit);
+    }
+  }
+
+  return maxProfit;
+};
+```
+
+- **時間複雜度：** \(O(n^2)\)
+- **空間複雜度：** \(O(1)\)
+
+### 方法二：一次遍歷（One-pass）
+
+這個方法使用一個迴圈來遍歷陣列，同時追蹤目前遇到的最低價格和最高利潤。
+
+```javascript
+const maxProfit = (prices) => {
+  let minPrice = Number.POSITIVE_INFINITY;
+  let maxProfit = 0;
+
+  for (const price of prices) {
+    minPrice = Math.min(minPrice, price);
+    maxProfit = Math.max(maxProfit, price - minPrice);
+  }
+
+  return maxProfit;
+};
+```
+
+- **時間複雜度：** \(O(n)\)
+- **空間複雜度：** \(O(1)\)
+
+#### `Number.POSITIVE_INFINITY` 使用原因
+
+在 JavaScript 中，`Number.POSITIVE_INFINITY` 是一個特殊的數值，表示正無窮大，
+
+在這個特定的問題中，它被用來初始化一個叫做 minPrice 的變數。
+
+這麼做的目的是為了確保我們在接下來的運算中能找到陣列中的最小值，因為 `Number.POSITIVE_INFINITY` 是最大的正數（實際上，它比所有正數都大），所以任何其他數字都會比它小。
+
+在迴圈中，使用了 `Math.min(minPrice, price)` 來不斷更新 `minPrice`。
+
+- 如果 price 大於 minPrice，minPrice 不會改變。
+- 如果 price 小於 minPrice，minPrice 會更新為 price。
+
+因為 `minPrice` 初始為 `Number.POSITIVE_INFINITY`，所以第一次運行 `Math.min(minPrice, price)` 時，`minPrice` 會被設定為陣列中的第一個數字。
