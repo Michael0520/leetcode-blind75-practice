@@ -1,0 +1,74 @@
+# Contains Duplicate - 存在重複元素
+
+## 題目描述
+
+在一個給定的整數陣列 `nums` 中，判斷是否存在重複的元素。如果有重複的元素，返回 `true`；否則返回 `false`。
+
+### 輸入與輸出
+
+- **輸入**: 一個整數陣列 `nums`，陣列的長度範圍是 1 到 \(10^5\)，元素的值範圍是 \(-10^9\) 到 \(10^9\)。
+- **輸出**: 一個布林值，`true` 表示有重複元素，`false` 表示沒有。
+
+## 解題思路
+
+考慮以下三種主要的解法：
+
+### 1. 暴力解法（Brute Force）
+
+遍歷每一對元素，查看是否有重複。這種方法的時間複雜度是 \(O(n^2)\)，非常低效。
+
+### 2. 使用 Set 資料結構
+
+1. 初始化一個空的 Set。
+2. 遍歷陣列的每一個元素，查看這個元素是否已經存在於 Set 中。
+3. 如果存在，返回 `true`。
+4. 如果不存在，將其添加到 Set 中。
+
+時間複雜度和空間複雜度都是 \(O(n)\)。
+
+### 3. 排序後比較（Sorting）
+
+1. 首先對陣列進行排序。
+2. 然後比較相鄰的元素是否相等。
+
+時間複雜度是 \(O(n \log n)\)，空間複雜度是 \(O(1)\)。
+
+## Code
+
+以下是使用 Set 資料結構的代碼實現：
+
+```javascript
+const containsDuplicate = (nums) => {
+  const numSet = new Set();
+  for (const num of nums) {
+    if (numSet.has(num)) {
+      return true;
+    }
+    numSet.add(num);
+  }
+  return false;
+};
+```
+
+### 優化
+
+實際上，我們可以更簡化這個問題。如果去重後的 Set 長度小於原陣列長度，那麼原陣列必定有重複元素：
+
+```javascript
+const containsDuplicate = (nums) => {
+  const numSet = new Set(nums);
+  return numSet.size !== nums.length;
+};
+```
+
+## 測試
+
+```javascript
+containsDuplicate([1,2,3,1]) 返回 true
+containsDuplicate([1,2,3,4]) 返回 false
+containsDuplicate([1,1,1,3,3,4,3,2,4,2]) 返回 true
+```
+
+## 結論
+
+這個問題有多種解法，但使用 Set 資料結構是我認為直觀且應用了 JS 語法特性的一種寫法。
