@@ -1,0 +1,61 @@
+# LeetCode 152: Maximum Product Subarray
+
+> 關鍵字：陣列、連續子陣列、動態規劃
+
+## 題目描述
+
+你有一串數字（正數、負數、或零）。目標是找到這串數字中一段連續的數字（也就是子陣列），這段數字的乘積是最大的。
+
+### 範例
+
+假設你有這些數字 `[2, 3, -2, 4]`。
+
+- `2 * 3 = 6` 是最大的乘積，所以答案是 6。
+
+### 限制條件
+
+- 數字串的長度在 1 到 20,000 之間。
+- 每個數字都在 -10 到 10 之間。
+
+## 解題思路
+
+### 使用動態規劃（就像一個記分板）
+
+1. **局部最大和最小**：因為負數乘負數會變正數，所以我們需要記錄到目前為止最大和最小的乘積。
+2. **全局最大**：這就是我們最終要找的答案。
+
+#### Code
+
+```javascript
+function maxProduct(nums) {
+  let currentMax = nums[0];
+  let currentMin = nums[0];
+  let globalMax = nums[0];
+
+  for (let i = 1; i < nums.length; i++) {
+    // 暫存第一次更新前的局部最大
+    const tempMax = currentMax;
+
+    // 更新局部最大和最小
+    currentMax = Math.max(nums[i], currentMax * nums[i], currentMin * nums[i]);
+    currentMin = Math.min(nums[i], tempMax * nums[i], currentMin * nums[i]);
+
+    // 更新全局最大
+    globalMax = Math.max(globalMax, currentMax);
+  }
+
+  return globalMax;
+}
+```
+
+#### 測試
+
+```javascript
+console.log(maxProduct([2, 3, -2, 4])); // 應該回傳 6
+console.log(maxProduct([-2, 0, -1])); // 應該回傳 0
+console.log(maxProduct([5, 9, 9])); // 應該回傳 81
+```
+
+## 結論
+
+用一個叫做「動態規劃」的技巧來解這個問題，基本上就是用一個記分板來記錄最大和最小的乘積，然後在走過每一個數字的時候更新這個記分板，最後找到最大的乘積。
