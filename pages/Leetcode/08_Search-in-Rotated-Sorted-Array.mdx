@@ -1,0 +1,63 @@
+# LeetCode 33: Search in Rotated Sorted Array
+
+> 陣列、旋轉排序、二分搜尋
+
+## 題目描述
+
+給定一個由 n 個獨一無二的數字組成的陣列，這個陣列原本是升序排序的，但被旋轉了一個未知的軸心索引 k。
+
+在旋轉後，需要找到一個目標數字 target 在陣列中的索引。如果找到，返回其索引；否則返回 -1。
+
+## 限制條件
+
+- `1 <= nums.length <= 5000`
+- `104 <= nums[i] <= 104`
+- `104 <= target <= 104`
+
+### 解題思路
+
+#### 使用二分搜尋
+
+為什麼使用二分搜尋？
+一般來說，對於排序好的陣列，二分搜尋是最有效的查找方法。即使陣列經過旋轉，我們依然可以利用二分搜尋的核心思想來解題。
+
+### 解法步驟
+
+1. 設置兩個指針 left 和 right: 一個在陣列的開頭，一個在陣列的結尾。
+2. 計算中點 mid: 在每次迭代中，使用 Math.floor() 來計算中點，確保得到整數。
+3. 比較 mid 和 target: 如果找到目標數字，返回索引。
+4. 決定下一步的搜索範圍: 如果 nums[mid] 不是 target，則縮小搜索範圍。
+
+```javascript
+function search(nums, target) {
+  let left = 0,
+    right = nums.length - 1;
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+    if (nums[mid] === target) return mid;
+
+    if (nums[left] <= nums[mid]) {
+      if (nums[left] <= target && target < nums[mid]) {
+        right = mid - 1;
+      } else {
+        left = mid + 1;
+      }
+    } else {
+      if (nums[mid] < target && target <= nums[right]) {
+        left = mid + 1;
+      } else {
+        right = mid - 1;
+      }
+    }
+  }
+  return -1;
+}
+```
+
+## 測試與調試
+
+```javascript
+console.log(search([4, 5, 6, 7, 0, 1, 2], 0)); // 應返回 4
+console.log(search([4, 5, 6, 7, 0, 1, 2], 3)); // 應返回 -1
+console.log(search([1], 0)); // 應返回 -1
+```
