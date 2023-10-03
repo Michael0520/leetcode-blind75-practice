@@ -1,0 +1,60 @@
+# LeetCode 153: Find Minimum in Rotated Sorted Array
+
+> 關鍵字：陣列、旋轉排序、二分搜尋
+
+## 題目描述
+
+給定一個由 n 個獨一無二的數字組成的陣列，這個陣列原本是升序排序的，但是被旋轉了 1 到 n 次，需要找到這個陣列中最小的數字。
+
+### 範例
+
+例如陣列 `[3, 4, 5, 1, 2]`。
+
+- 1 是這個陣列裡的最小數字，所以答案是 1。
+
+### 限制條件
+
+- `n = nums.length`
+- `1 <= n <= 5000`
+- `-5000 <= nums[i] <= 5000`
+
+## 解題思路
+
+### 使用二分搜尋
+
+1. **設置兩個指針**：一個在開頭 (`left`)，一個在結尾 (`right`)。
+2. **找中點 (`mid`)**：每次迭代找到中點，然後與 `right` 指針比較。
+3. **比較和縮小範圍**: 透過比較 `nums[mid]` 和 `nums[right]` 來更新 left 或 right。
+
+#### Code
+
+```javascript
+function findMin(nums) {
+  let left = 0;
+  let right = nums.length - 1;
+
+  while (left < right) {
+    const mid = Math.floor((left + right) / 2);
+
+    if (nums[mid] > nums[right]) {
+      left = mid + 1;
+    } else {
+      right = mid;
+    }
+  }
+
+  return nums[left];
+}
+```
+
+#### 測試與調試
+
+```javascript
+console.log(findMin([3, 4, 5, 1, 2])); // 應為 1
+console.log(findMin([4, 5, 6, 7, 0, 1, 2])); // 應為 0
+console.log(findMin([11, 13, 15, 17])); // 應為 11
+```
+
+## 結論
+
+透過二分搜尋，我們可以在 \(O(\log n)\) 的時間內找到旋轉排序陣列中的最小值。這是一種高效且符合題目要求的方法。
