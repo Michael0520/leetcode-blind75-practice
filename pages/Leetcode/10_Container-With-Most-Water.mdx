@@ -1,0 +1,72 @@
+# LeetCode 11: Container With Most Water
+
+> 陣列、雙指針、最大容量
+
+## 題目描述
+
+給定一個由 n 個整數組成的陣列 `height`，這些整數代表垂直的邊界。
+
+目標是選擇兩條邊界，和 x 軸一起形成一個容器，讓這個容器能儲存最多的水。
+
+## 限制條件
+
+- `n = height.length`
+- `2 <= n <= 10^5`
+- `0 <= height[i] <=> 10^4`
+
+## 解題思路
+
+### 使用雙指針
+
+雙指針方法能有效地解決這個問題，因為我們可以同時從兩側檢查，逐步接近最佳解。
+
+## 解法步驟
+
+1. 初始化變數
+
+   - `result` 用於儲存最大容量，初始值為 0。
+   - `left` 和 `right` 分別指向陣列的起始和結尾。
+
+2. 使用 `while` 迴圈
+
+   - 只要 `left` 小於 `right`，就繼續執行。
+
+3. 計算容量
+
+   - 找出 `left` 和 `right` 之間較短的邊界。
+   - 計算這兩個邊界形成的容器能儲存的水量。
+
+4. 更新最大容量
+
+   - 如果新計算出的容量大於 `result`，則更新 `result`。
+
+5. 移動指針
+   - 根據 `left` 和 `right` 邊界的高度，選擇合適的指針移動。
+
+```javascript
+const maxArea = (height) => {
+  let result = 0,
+    left = 0,
+    right = height.length - 1;
+
+  while (left < right) {
+    let smallestSide = Math.min(height[left], height[right]);
+    let area = (right - left) * smallestSide;
+
+    if (area > result) result = area;
+
+    if (height[left] < height[right]) left++;
+    else right--;
+  }
+
+  return result;
+};
+```
+
+## 測試與調試
+
+```javascript
+console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7])); // 應返回 49
+console.log(maxArea([1, 1])); // 應返回 1
+console.log(maxArea([4, 3, 2, 1, 4])); // 應返回 16
+```
