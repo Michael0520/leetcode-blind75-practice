@@ -1,0 +1,71 @@
+# LeetCode 15: 3Sum
+
+> 陣列、指針操作、排序
+
+## 題目描述
+
+給定一個整數陣列 nums，找出所有不重複的三元組 [nums[i], nums[j], nums[k]]，使得 i != j, i != k, j != k，並且 nums[i] + nums[j] + nums[k] == 0。
+
+### 限制條件
+
+- `3 <= nums.length <= 3000`
+- `10^5 <= nums[i] <= 10^5`
+
+### 解題思路
+
+#### 使用排序與雙指針
+
+為什麼使用排序與雙指針？
+
+- 排序可幫助我們更容易地識別重複的元素。
+- 雙指針方法可以減少時間複雜度。
+
+#### 解法步驟
+
+對陣列 nums 進行排序，初始化一個空陣列 result 用來儲存結果。
+
+使用一個 for 迴圈來遍歷 nums，並在每次迴圈中使用兩個指針 low 和 high。
+
+計算三個數的總和 sum，並根據 sum 的值來移動 low 和 high，來處理重複元素。
+
+```javascript
+function threeSum(nums) {
+  nums.sort((a, b) => a - b);
+  const result = [];
+
+  for (let i = 0; i < nums.length; i++) {
+    let low = i + 1,
+      high = nums.length - 1,
+      sum = 0;
+
+    while (low < high) {
+      // 計算三個數字總和
+      sum = nums[i] + nums[low] + nums[high];
+
+      // 如果總和為 0，則將三個數字加入 result
+      if (sum === 0) {
+        result.push([nums[i], nums[low], nums[high]]);
+        while (nums[low + 1] === nums[low]) low++;
+        while (nums[high - 1] === nums[high]) high--;
+        low++;
+        high--;
+      } else if (sum < 0) low++;
+      else high--;
+    }
+
+    // 處理重複元素
+    while (nums[i + 1] === nums[i]) i++;
+  }
+  return result;
+}
+```
+
+## 測試與調試
+
+```javascript
+console.log(threeSum([-1, 0, 1, 2, -1, -4])); // 應返回 [[-1,-1,2],[-1,0,1]]
+console.log(threeSum([0, 1, 1])); // 應返回 []
+console.log(threeSum([0, 0, 0])); // 應返回 [[0,0,0]]
+```
+
+這樣應該可以幫助你更深入地理解這個題目和解法。如果你有更多問題或需要進一步的說明，請隨時問我。
