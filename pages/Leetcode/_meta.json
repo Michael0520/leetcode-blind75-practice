@@ -8,5 +8,6 @@
     "07_Find-Minimum-in-Rotated-Sorted-Array": "Find Minimum in Rotated Sorted Array",
     "08_Search-in-Rotated-Sorted-Array": "Search in Rotated Sorted-Array",
     "09_3Sum": "3Sum",
-    "10_Container-With-Most-Water": "Container With Most Water"
+    "10_Container-With-Most-Water": "Container With Most Water",
+    "11_Sum-of-Two-Integers": "Sum of Two Integers"
 }

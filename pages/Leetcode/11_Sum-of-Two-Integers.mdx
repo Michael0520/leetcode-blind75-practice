@@ -1,0 +1,61 @@
+# LeetCode 371: Sum of Two Integers
+
+> 二進位運算、加法模擬
+
+## 題目描述
+
+給定兩個整數 a 和 b，在不使用 + 和 - 運算符的情況下，返回這兩個整數的和。
+
+### 限制條件
+
+- `1000 <= a, b <= 1000`
+
+### 解題思路
+
+#### 使用位運算模擬加法
+
+位運算可以用來模擬加法操作。這裡主要使用 XOR (^) 和 AND (&) 位運算符。
+
+### 解法步驟
+
+1. 初始化變數
+
+   - a 和 b 是題目給定的數字。
+
+2. 使用 while 迴圈
+
+   - 只要 b 不等於 0，就繼續執行迴圈。
+
+3. XOR 運算
+
+   - 對 a 和 b 做 XOR 運算，這會得到不考慮進位的和。
+
+4. AND 運算和左移
+
+   - 使用 AND 運算找出需要進位的位，然後對這個結果左移一位。
+
+5. 更新變數
+
+   - 將 XOR 的結果存回 a。
+   - 將進位（左移後的結果）存回 b。
+
+```javascript
+var getSum = function (a, b) {
+  while (b !== 0) {
+    const [xor, carry] = [a ^ b, (a & b) << 1];
+
+    a = xor;
+    b = carry;
+  }
+
+  return a;
+};
+```
+
+## 測試與調試
+
+```javascript
+console.log(getSum(1, 2)); // 應返回 3
+console.log(getSum(2, 3)); // 應返回 5
+console.log(getSum(-1, 1)); // 應返回 0
+```
