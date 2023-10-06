@@ -1,0 +1,47 @@
+# LeetCode 338: Counting Bits
+
+> 二進位運算、數組操作、動態規劃
+
+## 題目描述
+
+給定一個整數 n，目標是返回一個長度為 n + 1 的數組 ans，其中對於每一個 i `(0 <= i <= n)，ans[i]` 是 i 的二進位表示中 '1' 的數量。
+
+### 限制條件
+
+- `0 <= n <= 10^5`
+
+### 解題思路
+
+使用動態規劃和位運算
+動態規劃和位運算相結合，可以簡單而高效地解這個問題。
+
+#### 解法步驟
+
+1.  初始化數組
+
+    - 使用 `Uint8Array` 初始化一個 bitCounts 數組，長度為 n + 1，所有元素初始值為 0。
+
+2.  迴圈遍歷
+
+    - 從 0 遍歷至 n，對每一個整數 i 計算其二進位中 '1' 的數量。
+
+3.  位運算計算
+
+    - 透過 i >> 1（右移一位，即 i 除以 2）找到前一個狀態的 '1' 的數量，再加上 i 最後一個位是否為 '1'（用 i & 1 判斷）。
+
+```javascript
+const countBits = (n) => {
+  const bitCounts = new Uint8Array(n + 1);
+  for (let i = 0; i <= n; i++) {
+    bitCounts[i] = bitCounts[i >> 1] + (i & 1);
+  }
+  return [...bitCounts];
+};
+```
+
+## 測試與調試
+
+```javascript
+console.log(countBits(2)); // 應返回 [0,1,1]
+console.log(countBits(5)); // 應返回 [0,1,1,2,1,2]
+```
