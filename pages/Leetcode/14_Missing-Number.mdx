@@ -1,0 +1,48 @@
+# LeetCode 268: Missing Number
+
+> 陣列、位運算
+
+## 題目描述
+
+給定一個包含 n 個不同數字的陣列 nums，這些數字範圍在 `[0, n]`，最後返回陣列中缺失的唯一數字。
+
+### 限制條件
+
+- `n == nums.length`
+- `1 <= n <= 10^4`
+- `0 <= nums[i] <= n`
+- `nums` 的所有數字都是唯一的。
+
+#### 解題思路
+
+#### 解法步驟（使用排序）
+
+1. 排序陣列
+
+   - 對 nums 陣列進行排序。
+
+2. 遍歷陣列
+
+   - 遍歷排序後的陣列，找出第一個不滿足 `nums[i] == i` 的索引 i。
+
+3. 返回結果
+
+   - 返回索引 i 即是缺失的數字。
+
+```javascript
+const missingNumber = (nums) => {
+  nums.sort((a, b) => a - b);
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] !== i) return i;
+  }
+  return nums.length;
+};
+```
+
+## 測試與調試
+
+```javascript
+console.log(missingNumber([3, 0, 1])); // 應返回 2
+console.log(missingNumber([0, 1])); // 應返回 2
+console.log(missingNumber([9, 6, 4, 2, 3, 5, 7, 0, 1])); // 應返回 8
+```
