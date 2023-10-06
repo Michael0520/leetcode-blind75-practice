@@ -1,0 +1,58 @@
+# LeetCode 191: Number of 1 Bits
+
+> 二進位運算、位元計數
+
+## 題目描述
+
+給定一個 unsigned integer，計算其二進位表示中有多少個 '1'（這也稱為 Hamming weight）。
+
+### 限制條件
+
+輸入必須是長度為 32 的二進位字符串。
+
+#### 解題思路
+
+##### 方法一：位運算
+
+1. 初始化計數器為 0
+2. 用 AND 運算符比較整數和 1，如果結果是 1，計數器加 1
+3. 右移整數一位
+4. 重複步驟 2 和 3，直到整數變為 0
+
+##### 方法二：使用 toString(2)
+
+1. 使用 toString(2) 將整數轉換為二進位字符串。
+2. 移除所有 '0'，然後計算字符串的長度。
+
+#### 解法步驟
+
+##### 方法一：位運算
+
+```javascript
+var hammingWeight = function (n) {
+  let count = 0;
+  while (n !== 0) {
+    count += n & 1;
+    n >>>= 1;
+  }
+  return count;
+};
+```
+
+##### 方法二：使用 toString(2)
+
+我自己更喜歡這個方式，因為比較簡潔。
+
+```javascript
+var hammingWeight = function (n) {
+  return n.toString(2).split("0").join("").length;
+};
+```
+
+## 測試與調試
+
+```javascript
+console.log(hammingWeight(0b00000000000000000000000000001011)); // 應返回 3
+console.log(hammingWeight(0b00000000000000000000000010000000)); // 應返回 1
+console.log(hammingWeight(0b11111111111111111111111111111101)); // 應返回 31
+```
