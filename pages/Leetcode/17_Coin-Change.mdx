@@ -1,0 +1,55 @@
+# LeetCode 322: Coin Change
+
+> 關鍵字：動態規劃
+
+## 題目描述
+
+給定一個整數數組 `coins`，代表不同面值的硬幣，和一個整數 `amount` 代表總金額。
+
+返回構成該總金額所需的最少硬幣數。如果該金額不能由任何硬幣組合構成，則返回 `-1`。
+
+### 限制條件
+
+- `1 <= coins.length <= 12`
+- `1 <= coins[i] <= 2^31 - 1`
+- `0 <= amount <= 10^4`
+
+## 解題思路
+
+### 動態規劃（Dynamic Programming）
+
+我們用一個 Array `dp` 來存儲構成每個金額所需的最少硬幣數。
+
+#### 解法步驟
+
+1. **初始化 Array**
+
+   - 初始化一個長度為 `amount + 1` 的數組 `dp`，並將其所有元素設為 `Infinity`。
+   - 設定 `dp[0] = 0`，因為構成金額 `0` 所需的硬幣數是 `0`。
+
+2. **填滿 Array**
+   - 對於每一個硬幣，更新所有可能由它構成的金額 `dp[j]`。
+   - 具體地說，對於每個 `j >= coin[i]`，更新 `dp[j] = min(dp[j], dp[j - coin] + 1)`。
+
+```javascript
+const coinChange = (coins, amount) => {
+  const dp = new Array(amount + 1).fill(Infinity);
+  dp[0] = 0;
+
+  for (const coin of coins) {
+    for (let j = coin; j <= amount; j++) {
+      dp[j] = Math.min(dp[j], dp[j - coin] + 1);
+    }
+  }
+
+  return dp[amount] === Infinity ? -1 : dp[amount];
+};
+```
+
+## 測試與調試
+
+```javascript
+console.log(coinChange([1, 2, 5], 11)); // 應返回 3
+console.log(coinChange([2], 3)); // 應返回 -1
+console.log(coinChange([1], 0)); // 應返回 0
+```
