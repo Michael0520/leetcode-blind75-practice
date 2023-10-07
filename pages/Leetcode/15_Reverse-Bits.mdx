@@ -1,0 +1,47 @@
+# LeetCode 190: Reverse Bits
+
+> 關鍵字：位運算、字串操作
+
+## 題目描述
+
+給定一個 32 位無符號整數 `n`，目標是反轉 `n` 的二進位表示。
+
+### 限制條件
+
+- 輸入必須是長度為 32 的二進位字串。
+
+## 解題思路
+
+### 位運算與字串操作
+
+通過將整數轉換為二進位字串，反轉該字串，再轉換回整數，我們可以達到反轉位的目的。
+
+#### 解法步驟
+
+1. **轉換為二進位字串**
+   - 使用 `toString(2)` 方法將整數 `n` 轉換為二進位字串。
+2. **使用 padStart**
+
+   - 使用 `padStart(32, '0')` 確保二進位字串長度為 32。
+
+3. **反轉字串**
+
+   - 使用 `split('')`、`reverse()` 和 `join('')` 方法反轉二進位字串。
+
+4. **轉回整數**
+   - 使用 `parseInt(反轉後的字串, 2)` 將反轉後的二進位字串轉換回整數。
+
+```javascript
+const reverseBits = (n) => {
+  const binaryStr = n.toString(2).padStart(32, "0");
+  const reversedStr = binaryStr.split("").reverse().join("");
+  return parseInt(reversedStr, 2);
+};
+```
+
+## 測試與調試
+
+```javascript
+console.log(reverseBits(43261596)); // 應返回 964176192
+console.log(reverseBits(4294967293)); // 應返回 3221225471
+```
