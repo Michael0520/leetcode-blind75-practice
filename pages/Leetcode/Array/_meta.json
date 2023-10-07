@@ -8,13 +8,5 @@
     "07_Find-Minimum-in-Rotated-Sorted-Array": "Find Minimum in Rotated Sorted Array",
     "08_Search-in-Rotated-Sorted-Array": "Search in Rotated Sorted-Array",
     "09_3Sum": "3Sum",
-    "10_Container-With-Most-Water": "Container With Most Water",
-    "11_Sum-of-Two-Integers": "Sum of Two Integers",
-    "12_Number-of-1-Bits": "Number of 1 Bits",
-    "13_Counting-Bits": "Counting Bits",
-    "14_Missing-Number": "Missing Number",
-    "15_Reverse-Bits": "Reverse Bits",
-    "16_Climbing-Stairs": "Climbing Stairs",
-    "17_Coin-Change": "Coin Change",
-    "18_Longest-Increasing-Subsequence": "Longest Increasing Subsequence"
+    "10_Container-With-Most-Water": "Container With Most Water"
 }
