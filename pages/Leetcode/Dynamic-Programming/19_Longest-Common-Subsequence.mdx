@@ -1,1 +1,65 @@
-# 123
+# LeetCode 1143: Longest Common Subsequence
+
+> **關鍵字：動態規劃**
+
+## 題目描述
+
+給定兩個字符串 `text1` 和 `text2`，返回他們最長的共同子序列（subsequence）的長度。
+
+### 限制條件
+
+- `1 <= text1.length, text2.length <= 1000`
+- `text1` 和 `text2` 僅包含小寫英文字母。
+
+## 解題思路
+
+### 動態規劃（Dynamic Programming）
+
+這裡使用一個二維數組 `dpTable` 來儲存子問題的解。
+
+#### 解法步驟
+
+1. **初始化「積木盒子」（dpTable）**
+
+   - 初始化一個 `(text1.length + 1) x (text2.length + 1)` 的二維數組，所有元素設為 `0`。
+
+2. **填滿「積木盒子」**
+
+   - 遍歷 `text1` 和 `text2`，根據是否有相同字符來更新 `dpTable`。
+
+```javascript
+const longestCommonSubsequence = (text1, text2) => {
+  const dpTable = Array.from({ length: text1.length + 1 }, () =>
+    Array(text2.length + 1).fill(0)
+  );
+
+  for (let idxStr1 = 1; idxStr1 <= text1.length; idxStr1++) {
+    for (let idxStr2 = 1; idxStr2 <= text2.length; idxStr2++) {
+      if (text1[idxStr1 - 1] === text2[idxStr2 - 1]) {
+        dpTable[idxStr1][idxStr2] = dpTable[idxStr1 - 1][idxStr2 - 1] + 1;
+      } else {
+        dpTable[idxStr1][idxStr2] = Math.max(
+          dpTable[idxStr1 - 1][idxStr2],
+          dpTable[idxStr1][idxStr2 - 1]
+        );
+      }
+    }
+  }
+
+  return dpTable[text1.length][text2.length];
+};
+```
+
+## 註解與解釋
+
+- `dpTable[idxStr1][idxStr2] = dpTable[idxStr1 - 1][idxStr2 - 1] + 1;`：這表示找到一個新的相符字符，接著將新的「積木盒子」的高度（即共同子序列的長度），也就是「左上角積木盒子」的高度加一。
+
+- `Math.max(dpTable[idxStr1 - 1][idxStr2], dpTable[idxStr1][idxStr2 - 1]);`：這是在沒有找到相符字符時，選擇左邊或上面「積木盒子」中積木最多的一個。
+
+## 測試與調試
+
+```javascript
+console.log(longestCommonSubsequence("abcde", "ace")); // 應返回 3
+console.log(longestCommonSubsequence("abc", "abc")); // 應返回 3
+console.log(longestCommonSubsequence("abc", "def")); // 應返回 0
+```
