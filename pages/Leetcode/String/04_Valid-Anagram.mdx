@@ -1,0 +1,50 @@
+# LeetCode 242: Valid Anagram
+
+> **關鍵字：排序、哈希表**
+
+## 題目描述
+
+給定兩個字符串 `s` 和 `t`，如果 `t` 是 `s` 的同字母異序詞（anagram），則返回 `true`，否則返回 `false`。
+
+### 限制條件
+
+- `1 <= s.length, t.length <= 5 * 10^4`
+- `s` 和 `t` 僅由小寫英文字母組成。
+
+## 解題思路
+
+### 解法步驟
+
+1. **檢查長度是否相等**
+
+   - 如果 `s` 和 `t` 的長度不相等，則直接返回 `false`。
+
+2. **排序字符串**
+
+   - 使用 `split("")` 將 `s` 和 `t` 轉為字符數組，然後用 `sort()` 方法排序。
+
+3. **比較排序後的字符串**
+   - 用 `join("")` 將排序後的數組轉回字串，然後比較是否相等。
+
+```javascript
+function isAnagram(s) {
+  if (s.length !== t.length) {
+    return false;
+  }
+  return s.split("").sort().join("") === t.split("").sort().join("");
+}
+```
+
+### 註解與解釋
+
+首先，確保兩個字串的長度相等，這是一個必要的預檢查步驟，因為不同長度的字串不可能是同字母異序詞。
+
+- 接著使用 `sort()` 方法進行排序，這個方法的時間複雜度是 (O(n log n)。
+
+## 測試與調試
+
+```javascript
+console.log(isAnagram("anagram", "nagaram")); // 應返回 true
+console.log(isAnagram("rat", "car")); // 應返回 false
+console.log(isAnagram("a", "b")); // 應返回 false
+```
