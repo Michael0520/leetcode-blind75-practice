@@ -1,0 +1,54 @@
+# LeetCode 125: Valid Palindrome
+
+> 關鍵字：字串處理，正則表達式
+
+## 題目描述
+
+給定一個字符串 s，將所有大寫字母轉換為小寫字母，並移除所有非字母和非數字的字符。接著判斷這個處理後的字符串是否為回文。
+
+### 限制條件
+
+- `1 <= s.length <= 2 * 10^5`
+- s 只包含可打印的 ASCII 字符。
+
+### 解題思路
+
+#### 字串處理
+
+1. 轉換大小寫和移除非字母、非數字字符
+
+   - 使用 `toLowerCase()` 和正則表達式。
+
+2. 判斷是否回文
+
+   - 對比原字符串與其反轉版本是否相同。
+
+#### 解法步驟
+
+1. 使用 toLowerCase() 將字符串轉換為全小寫。
+2. 使用 replace() 和正則表達式 `/[^a-zA-Z0-9]/g` 移除所有非字母和非數字的字符。
+3. 判斷處理後的字符串是否為回文。
+
+```javascript
+function isPalindrome(s: string): boolean {
+  const cleanedS = s.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
+  return cleanedS === cleanedS.split("").reverse().join("");
+}
+```
+
+### 註解與解釋
+
+- toLowerCase(): 這個方法將所有大寫字母轉換為小寫字母。
+
+- `replace(/[^a-zA-Z0-9]/g, "")`: 這個方法使用正則表達式來移除所有非字母和非數字的字符。
+
+- split("").reverse().join(""): 這一系列操作將字符串反轉。
+
+首先，split("") 將字符串分割成字符陣列，然後 reverse() 將陣列反轉，最後 join("") 將它們重新組合成字符串。
+
+## 測試與調試
+
+```javascript
+console.log(isPalindrome("A man, a plan, a canal: Panama")); // 應返回 true
+console.log(isPalindrome("race a car")); // 應返回 false
+```
