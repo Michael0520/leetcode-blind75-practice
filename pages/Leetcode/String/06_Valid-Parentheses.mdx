@@ -1,0 +1,74 @@
+# LeetCode 20: Valid Parentheses
+
+> **關鍵字：堆疊（Stack）、映射（Mapping）**
+
+## 題目描述
+
+給定一個只包含字符 `'(', ')', '{', '}', '[' 和 ']'` 的字符串 `s`，判斷給定的字符串是否是有效的。
+
+### 限制條件
+
+- `1 <= s.length <= 10^4`
+- `s` 只包含括號 `'()[]{}'`
+
+## 解題思路
+
+### 解法步驟
+
+1. **初始化一個空堆疊和映射**
+
+   ```javascript
+   const [stack, mapping] = [[], { ")": "(", "}": "{", "]": "[" }];
+   ```
+
+2. **遍歷字符串**
+
+   - 使用 `for...of` 循環。
+   - 對於每個字符，如果它是閉括號，則檢查堆疊頂部是否有匹配的開括號。
+
+   ```javascript
+   for (const char of s) {
+     const topElement = stack.pop() || null;
+
+     if (mapping[char] && mapping[char] !== topElement) {
+       return false;
+     } else if (!mapping[char]) {
+       stack.push(topElement, char);
+     }
+   }
+   ```
+
+3. **檢查堆疊是否為空**
+
+   ```javascript
+   return !stack.length;
+   ```
+
+### Code
+
+```javascript
+const isValid = (s) => {
+  const [stack, mapping] = [[], { ")": "(", "}": "{", "]": "[" }];
+
+  for (const char of s) {
+    const topElement = stack.pop() || null;
+
+    if (mapping[char] && mapping[char] !== topElement) {
+      return false;
+    } else if (!mapping[char]) {
+      stack.push(topElement, char);
+    }
+  }
+
+  return !stack.length;
+};
+```
+
+## 測試與調試
+
+```javascript
+console.log(isValid("()")); // 應返回 true
+console.log(isValid("()[]{}")); // 應返回 true
+console.log(isValid("(]")); // 應返回 false
+console.log(isValid("([)]")); // 應返回 false
+```
