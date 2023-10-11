@@ -1,0 +1,59 @@
+# LeetCode 572: Subtree of Another Tree
+
+> 關鍵字：二元樹、遞迴、子樹
+
+## 題目描述
+
+給定兩個二元樹的根節點 root 和 subRoot，
+如果 root 中存在一個子樹，它的結構和節點值與 subRoot 完全相同，則返回 true，否則返回 false。
+
+### 限制條件
+
+- root 樹的節點數量在 [1, 2000] 範圍內。
+- subRoot 樹的節點數量在 [1, 1000] 範圍內。
+- 節點的值範圍是 -104 到 104。
+
+### 解題思路
+
+#### 遞迴解法
+
+1. 判斷兩棵樹是否相同
+   - 使用一個遞迴函數 isSameTree 來判斷兩棵樹是否完全相同。
+2. 在主樹中尋找子樹
+   - 遍歷主樹 root 的每一個節點。
+   - 對於每一個節點，使用 isSameTree 函數檢查其是否與 subRoot 相同。
+
+#### 解法步驟
+
+```javascript
+// 判斷兩棵樹是否相同
+function isSameTree(tree1, tree2) {
+  if (!tree1 && !tree2) return true; // 兩棵樹都為空
+  if (!tree1 || !tree2) return false; // 其中一棵樹為空
+  if (tree1.val !== tree2.val) return false; // 兩棵樹的根節點值不同
+
+  return (
+    isSameTree(tree1.left, tree2.left) && isSameTree(tree1.right, tree2.right)
+  );
+}
+
+// 判斷一棵樹是否是另一棵樹的子樹
+function isSubtree(root, subRoot) {
+  if (!root) return false;
+  if (isSameTree(root, subRoot)) return true;
+
+  return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+}
+```
+
+### 註解與解釋
+
+- `isSameTree(tree1, tree2)`: 此函數會遞迴地比較兩棵樹的每一個節點是否相同。
+- `isSubtree(root, subRoot)`: 此函數會遍歷主樹的每一個節點，並使用 isSameTree 來檢查是否存在一個與 subRoot 完全相同的子樹。
+
+## 測試
+
+```javascript
+console.log(isSubtree([3, 4, 5, 1, 2], [4, 1, 2])); // 應返回 true
+console.log(isSubtree([3, 4, 5, 1, 2, null, null, null, null, 0], [4, 1, 2])); // 應返回 false
+```
